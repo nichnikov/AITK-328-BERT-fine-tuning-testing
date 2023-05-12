@@ -1,0 +1,5 @@
+adapter-transformers==3.2.0
+datasets==2.11.0
+numpy==1.24.2
+transformers==4.24.0
+torch==1.12.1
