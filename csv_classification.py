@@ -1,13 +1,8 @@
 import os
-import re
-import numpy as np
 import pandas as pd
-from datasets import DatasetDict
-from regex import P
 from transformers import (BertTokenizer,
                           BertModelWithHeads,
                           )
-from transformers.adapters.composition import Fuse
 import time
 import torch
 
@@ -37,15 +32,17 @@ model.load_adapter(adapter_path)
 model.set_active_adapters(adapter_name)
 
 # test_data_df = pd.read_csv(os.path.join("data", "queries_with_answers.csv"), sep="\t")
-test_data_df = pd.read_csv(os.path.join("data", "fa_test_results_with_asw_texts2390.csv"), sep="\t")
+test_data_df = pd.read_csv(os.path.join("data", "EBmodel188655ft_for_testing.csv"), sep="\t")
 
 test_dicts = test_data_df.to_dict(orient="records")
+
+print(test_dicts[:3])
 
 result_dics = []
 k = 1
 for d in test_dicts:
     q = d["Query"]
-    a = d["BestFastAnswerText"]
+    a = d["ShortAnswerText"]
     # q = d["query"]
     # a = d["answer"]
     t = time.time()
@@ -59,4 +56,4 @@ for d in test_dicts:
 
 result_df = pd.DataFrame(result_dics)
 # result_df.to_csv(os.path.join("data", "queries_with_answers_scores.csv"), sep="\t")
-result_df.to_csv(os.path.join("data", "fa_qa_with_val_2390.csv"), sep="\t")
+result_df.to_csv(os.path.join("data", "EBmodel188655ft_with_val.csv"), sep="\t")
